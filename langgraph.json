@@ -1,7 +1,7 @@
 {
   "dependencies": ["."],
   "graphs": {
-    "demo": "./graph.py:make_graph"
+    "agent_system": "./enhanced_graph.py:make_enhanced_graph"
   },
   "env": ".env",
   "python_version": "3.12",

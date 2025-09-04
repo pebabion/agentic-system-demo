@@ -4,29 +4,37 @@ A RAG-enhanced agentic system that combines database querying capabilities with 
 
 ## Overview
 
-This project demonstrates an intelligent agent system that can:
-- Query PostgreSQL databases using MCP (Model Context Protocol)
-- Search the internet using Tavily Search
-- Use RAG (Retrieval-Augmented Generation) to provide context-aware responses
-- Answer complex questions about sales data by combining database insights with web research
+This project demonstrates an advanced hierarchical multi-agent system that can:
+- **Hierarchical Coordination**: Supervisor agent intelligently delegates tasks to specialized agents
+- **Memory Persistence**: Maintains conversation context across sessions using SQLite checkpointer
+- **Database Integration**: Query PostgreSQL databases using MCP (Model Context Protocol)
+- **Web Search**: Search the internet using Tavily Search via specialized general agent
+- **RAG Enhancement**: Use RAG (Retrieval-Augmented Generation) to provide context-aware responses
+- **Intelligent Routing**: Automatically route queries to appropriate specialized agents
+- **Task Decomposition**: Break complex queries into manageable subtasks
 
 ## Features
 
+- **Hierarchical Supervisor**: Coordinates task delegation and monitors execution across specialized agents
+- **Memory Persistence**: SQLite checkpointer maintains conversation state across sessions
+- **Specialized Agents**: Purpose-built agents for general queries, data analysis, and web research
 - **RAG System**: Uses FAISS vector store with OpenAI embeddings to provide relevant schema documentation context
-- **Multi-Tool Agent**: LangGraph ReAct agent with database and web search capabilities
 - **PostgreSQL Integration**: MCP client for direct database interactions with AdventureWorks sales data
-- **Streaming Responses**: Asynchronous streaming for real-time agent responses
+- **Intelligent Routing**: Automatic agent selection based on query complexity and type
+- **Task Decomposition**: Breaks complex queries into manageable, coordinated subtasks
 - **Schema-Aware**: Automatically retrieves relevant database schema information based on user queries
 
 ## Architecture
 
-The system consists of several key components:
+The enhanced hierarchical system consists of several key components:
 
-1. **RAG System** (`create_rag_system`): Creates a vector store from sales schema documentation
-2. **Context Retrieval** (`retrieve_relevant_context`): Finds relevant schema information for queries
-3. **Enhanced Agent** (`create_enhanced_agent_with_rag`): Combines RAG context with LangGraph agent
-4. **MCP Client**: Connects to PostgreSQL database server
-5. **Tavily Search**: Provides web search capabilities
+1. **Supervisor Agent** (`SupervisorAgent`): Orchestrates task coordination, decomposition, and delegation
+2. **General Agent** (`GeneralAgent`): Handles general queries, basic database operations, and web search
+3. **Data Analyst Agent** (`DataAnalystAgent`): Specialized for statistical analysis, reporting, and business insights
+4. **RAG System** (`create_rag_system`): Creates a vector store from sales schema documentation
+5. **Memory Persistence** (`SqliteSaver`): Maintains conversation state across sessions
+6. **MCP Client**: Connects to PostgreSQL database server
+7. **Hierarchical Graph** (`HierarchicalSystem`): Coordinates agent interactions and workflow
 
 ## Prerequisites
 
@@ -62,17 +70,19 @@ TAVILY_API_KEY=your_tavily_api_key
 
 ## Usage
 
-Run the demo:
+Run the enhanced hierarchical system:
 ```bash
-python main.py
+langgraph dev --allow-blocking
 ```
 
 The system will:
-1. Create a RAG vector store from the sales schema documentation
-2. Initialize the MCP client for database connections
-3. Set up tools (database queries + web search)
-4. Process the example query: "What is the total sales in different territories in 2012?"
-5. Stream the agent's response
+1. Start the LangGraph development server
+2. Initialize the hierarchical supervisor with specialized agents
+3. Set up memory persistence with SQLite checkpointer
+4. Create RAG-enhanced context from sales schema documentation
+5. Provide intelligent task coordination and delegation
+
+Access the system via the LangGraph Studio interface or API calls to the `agent_system` graph.
 
 ## Configuration
 
@@ -91,7 +101,7 @@ The PostgreSQL connection is configured in `main.py`:
 ```
 
 ### LangGraph Configuration
-The project includes `langgraph.json` for graph deployment configuration.
+The project includes `langgraph.json` for graph deployment configuration with the `agent_system` graph endpoint.
 
 ## Dependencies
 
